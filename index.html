@@ -220,6 +220,127 @@ html, body {
 }
 
 /* ═══════════════════════════════════════
+   SLIDE 2 — PLASTIC INFO (big screen)
+═══════════════════════════════════════ */
+.slide-info {
+  background: linear-gradient(135deg, #0f172a 0%, #0c1a2e 50%, #111827 100%);
+  overflow: hidden;
+}
+
+.info-blob {
+  position: absolute; border-radius: 50%;
+  filter: blur(90px); pointer-events: none; z-index: 0;
+}
+.ib1 { width: 50vw; height: 50vw; top: -20%; left: -10%;  background: rgba(56,189,248,0.14); }
+.ib2 { width: 38vw; height: 38vw; bottom:-15%; right:-8%; background: rgba(251,113,133,0.13); }
+.ib3 { width: 28vw; height: 28vw; top:35%; right:15%;     background: rgba(52,211,153,0.09); }
+
+.info-inner {
+  position: relative; z-index: 2;
+  width: 94%; max-width: 1240px;
+  height: 96vh;
+  display: flex; flex-direction: column;
+  gap: 1.6vh;
+  justify-content: center;
+}
+
+.info-heading {
+  display: flex; align-items: center; gap: 14px; flex-shrink: 0;
+}
+.info-heading-icon { font-size: 6vh; line-height: 1; }
+.info-title {
+  font-family: 'Baloo 2', cursive;
+  font-size: 5vh; font-weight: 900; color: #fff; line-height: 1.05;
+  text-shadow: 0 0 40px rgba(56,189,248,0.3);
+}
+.info-title em { font-style: normal; color: #7dd3fc; }
+.info-sub {
+  font-size: 2vh; font-weight: 700;
+  color: rgba(255,255,255,0.5); margin-top: 3px;
+}
+
+/* two-column layout */
+.info-cols {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.6vw;
+  flex: 1; min-height: 0;
+}
+
+.info-section {
+  background: rgba(255,255,255,0.04);
+  border: 1.5px solid rgba(255,255,255,0.09);
+  border-radius: 20px;
+  padding: 2.2vh 2vw;
+  display: flex; flex-direction: column; gap: 1.4vh;
+  backdrop-filter: blur(12px);
+}
+
+.info-sec-label {
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 0.6vh 1.4vw;
+  border-radius: 50px;
+  border: 1.5px solid;
+  font-family: 'Baloo 2', cursive;
+  font-size: 2.2vh; font-weight: 800;
+  align-self: flex-start;
+}
+
+.info-rows { display: flex; flex-direction: column; gap: 1.2vh; flex: 1; }
+
+.info-row {
+  display: flex; align-items: flex-start; gap: 1.2vw;
+  animation: fadeUp 0.5s ease both;
+}
+.info-row-icon {
+  width: 4.8vh; height: 4.8vh; border-radius: 12px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 2.4vh; flex-shrink: 0;
+}
+.info-row-text {
+  font-size: 2.1vh; font-weight: 600;
+  color: rgba(255,255,255,0.82); line-height: 1.45;
+  padding-top: 0.5vh;
+}
+.info-row-text strong { color: #fff; font-weight: 800; }
+
+/* stat bar at bottom */
+.info-stat-bar {
+  flex-shrink: 0;
+  background: rgba(255,255,255,0.06);
+  border: 1.5px solid rgba(255,255,255,0.1);
+  border-radius: 16px;
+  padding: 1.6vh 2vw;
+  display: flex; align-items: center; justify-content: space-around;
+  backdrop-filter: blur(12px);
+}
+.info-stat { text-align: center; }
+.info-stat-num {
+  font-family: 'Baloo 2', cursive;
+  font-size: 4.2vh; font-weight: 900; color: #fff; line-height: 1;
+}
+.info-stat-num span {
+  font-size: 2.2vh; color: #7dd3fc; font-weight: 700; margin-left: 2px;
+}
+.info-stat-label {
+  font-size: 1.7vh; font-weight: 700;
+  color: rgba(255,255,255,0.55); margin-top: 2px;
+}
+.info-stat-divider {
+  width: 1.5px; height: 5vh;
+  background: rgba(255,255,255,0.12); border-radius: 2px;
+}
+
+/* stagger row animations when slide is active */
+.active .info-section .info-row:nth-child(1) { animation-delay: 0.15s; }
+.active .info-section .info-row:nth-child(2) { animation-delay: 0.25s; }
+.active .info-section .info-row:nth-child(3) { animation-delay: 0.35s; }
+.active .info-section .info-row:nth-child(4) { animation-delay: 0.45s; }
+.active .info-heading  { animation: fadeUp 0.5s 0.05s ease both; }
+.active .info-section  { animation: fadeUp 0.5s 0.1s  ease both; }
+.active .info-stat-bar { animation: fadeUp 0.5s 0.5s  ease both; }
+
+/* ═══════════════════════════════════════
    SLIDE 3 — KIDS ACTION (big screen, fits 100vh)
 ═══════════════════════════════════════ */
 .slide-action {
@@ -409,8 +530,107 @@ html, body {
     </div>
   </div>
 
-  <!-- ══════ SLIDE 2: VIDEO 1 ══════ -->
-  <div class="slide slide-video1" id="slide-1">
+  <!-- ══════ SLIDE 2: WHAT IS PLASTIC & WHY HARMFUL ══════ -->
+  <div class="slide slide-info" id="slide-1">
+
+    <div class="info-blob ib1"></div>
+    <div class="info-blob ib2"></div>
+    <div class="info-blob ib3"></div>
+
+    <div class="info-inner">
+
+      <!-- heading -->
+      <div class="info-heading">
+        <span class="info-heading-icon">🧪</span>
+        <div>
+          <div class="info-title">What is Plastic — <em>& Why is it Harmful?</em></div>
+          <div class="info-sub">The truth every Planet Hero needs to know 🌍</div>
+        </div>
+      </div>
+
+      <!-- two columns -->
+      <div class="info-cols">
+
+        <!-- LEFT col: what is plastic -->
+        <div class="info-section">
+          <div class="info-sec-label" style="background:rgba(96,165,250,0.18);border-color:rgba(96,165,250,0.4);color:#93c5fd">
+            🔬 What is Plastic?
+          </div>
+          <div class="info-rows">
+            <div class="info-row">
+              <div class="info-row-icon" style="background:rgba(96,165,250,0.15)">🏭</div>
+              <div class="info-row-text"><strong>Man-made material</strong> created from oil &amp; chemicals deep underground</div>
+            </div>
+            <div class="info-row">
+              <div class="info-row-icon" style="background:rgba(96,165,250,0.15)">💡</div>
+              <div class="info-row-text"><strong>Light, cheap &amp; strong</strong> — that's why it's used everywhere around us</div>
+            </div>
+            <div class="info-row">
+              <div class="info-row-icon" style="background:rgba(96,165,250,0.15)">🛍️</div>
+              <div class="info-row-text">Found in <strong>bottles, bags, toys, straws, wrappers</strong> &amp; packaging</div>
+            </div>
+            <div class="info-row">
+              <div class="info-row-icon" style="background:rgba(96,165,250,0.15)">⚠️</div>
+              <div class="info-row-text">Most plastic is used <strong>only once</strong> — then thrown away forever</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- RIGHT col: why harmful -->
+        <div class="info-section">
+          <div class="info-sec-label" style="background:rgba(251,113,133,0.18);border-color:rgba(251,113,133,0.4);color:#fca5a5">
+            ☠️ Why is it Harmful?
+          </div>
+          <div class="info-rows">
+            <div class="info-row">
+              <div class="info-row-icon" style="background:rgba(251,113,133,0.15)">⏳</div>
+              <div class="info-row-text">Takes <strong>450+ years</strong> to break down — it outlives your great-grandchildren!</div>
+            </div>
+            <div class="info-row">
+              <div class="info-row-icon" style="background:rgba(251,113,133,0.15)">🌊</div>
+              <div class="info-row-text"><strong>8 million tons</strong> enter our oceans every year — one truck per minute!</div>
+            </div>
+            <div class="info-row">
+              <div class="info-row-icon" style="background:rgba(251,113,133,0.15)">🐢</div>
+              <div class="info-row-text">Over <strong>1 million sea animals</strong> die each year from eating or tangling in plastic</div>
+            </div>
+            <div class="info-row">
+              <div class="info-row-icon" style="background:rgba(251,113,133,0.15)">🧬</div>
+              <div class="info-row-text">Breaks into <strong>microplastics</strong> that enter our food, water — and our bodies</div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- bottom stat bar -->
+      <div class="info-stat-bar">
+        <div class="info-stat">
+          <div class="info-stat-num">450<span>yrs</span></div>
+          <div class="info-stat-label">to decompose</div>
+        </div>
+        <div class="info-stat-divider"></div>
+        <div class="info-stat">
+          <div class="info-stat-num">8M<span>tons</span></div>
+          <div class="info-stat-label">into oceans yearly</div>
+        </div>
+        <div class="info-stat-divider"></div>
+        <div class="info-stat">
+          <div class="info-stat-num">1M<span>+</span></div>
+          <div class="info-stat-label">sea animals killed</div>
+        </div>
+        <div class="info-stat-divider"></div>
+        <div class="info-stat">
+          <div class="info-stat-num">91<span>%</span></div>
+          <div class="info-stat-label">of plastic never recycled</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ══════ SLIDE 3: VIDEO 1 ══════ -->
+  <div class="slide slide-video1" id="slide-2">
     <div class="video-stars" id="stars1"></div>
     <div class="video-wrap">
       <div class="video-label">🎬 Let's Watch — <span>What is Plastic & Why It's Harmful?</span></div>
@@ -426,8 +646,8 @@ html, body {
     </div>
   </div>
 
-  <!-- ══════ SLIDE 3: KIDS ACTION SLIDE (big screen) ══════ -->
-  <div class="slide slide-action" id="slide-2">
+  <!-- ══════ SLIDE 4: KIDS ACTION SLIDE (big screen) ══════ -->
+  <div class="slide slide-action" id="slide-3">
 
     <div class="action-bg-blob ab-blob1"></div>
     <div class="action-bg-blob ab-blob2"></div>
@@ -507,8 +727,8 @@ html, body {
     </div>
   </div>
 
-  <!-- ══════ SLIDE 4: ENDING VIDEO ══════ -->
-  <div class="slide slide-video2" id="slide-3">
+  <!-- ══════ SLIDE 5: ENDING VIDEO ══════ -->
+  <div class="slide slide-video2" id="slide-4">
     <div class="video-stars" id="stars2"></div>
     <div class="video-wrap">
       <div class="video-label">🌟 <span>Our Planet Needs Us — Let's Make a Difference!</span></div>
@@ -527,7 +747,7 @@ html, body {
 </div>
 
 <script>
-  const TOTAL = 4;
+  const TOTAL = 5;
   let cur = 0;
 
   // dots
