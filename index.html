@@ -4,1192 +4,613 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>A Day Without Plastic 🌍</title>
-<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;600;700;800&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;600;700;800;900&family=Nunito:ital,wght@0,400;0,600;0,700;0,800;1,600&display=swap" rel="stylesheet">
 <style>
-  :root {
-    --green: #2E7D32;
-    --green-light: #4CAF50;
-    --green-pale: #E8F5E9;
-    --blue: #0277BD;
-    --blue-light: #29B6F6;
-    --ocean: #006064;
-    --yellow: #F9A825;
-    --orange: #E65100;
-    --red: #C62828;
-    --white: #FFFFFF;
-    --cream: #FFFDE7;
-    --text-dark: #1B2A1E;
-    --leaf: #66BB6A;
-  }
-
-  * { margin: 0; padding: 0; box-sizing: border-box; }
-
-  body {
-    font-family: 'Nunito', sans-serif;
-    background: #0a1f0a;
-    color: var(--text-dark);
-    overflow: hidden;
-    height: 100vh;
-    width: 100vw;
-  }
-
-  /* ===== SLIDE CONTAINER ===== */
-  .slideshow {
-    width: 100vw;
-    height: 100vh;
-    position: relative;
-    overflow: hidden;
-  }
-
-  .slide {
-    position: absolute;
-    inset: 0;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    opacity: 0;
-    transform: translateX(100%);
-    transition: all 0.6s cubic-bezier(0.77, 0, 0.175, 1);
-    pointer-events: none;
-  }
-
-  .slide.active {
-    opacity: 1;
-    transform: translateX(0);
-    pointer-events: all;
-  }
-
-  .slide.exit {
-    opacity: 0;
-    transform: translateX(-100%);
-  }
-
-  /* ===== SLIDE 1 - TITLE ===== */
-  .slide-title {
-    background: linear-gradient(135deg, #1B5E20 0%, #2E7D32 40%, #1565C0 100%);
-    position: relative;
-    overflow: hidden;
-  }
-
-  .slide-title::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Ccircle cx='50' cy='50' r='40' fill='none' stroke='rgba(255,255,255,0.05)' stroke-width='1'/%3E%3C/svg%3E") repeat;
-    animation: bgMove 20s linear infinite;
-  }
-
-  @keyframes bgMove { from { background-position: 0 0; } to { background-position: 100px 100px; } }
-
-  .earth-emoji {
-    font-size: 120px;
-    animation: earthSpin 8s linear infinite;
-    filter: drop-shadow(0 0 30px rgba(100,200,100,0.5));
-    margin-bottom: 20px;
-    position: relative;
-    z-index: 2;
-  }
-
-  @keyframes earthSpin { 0%,100% { transform: scale(1) rotate(-3deg); } 50% { transform: scale(1.05) rotate(3deg); } }
-
-  .slide-title h1 {
-    font-family: 'Baloo 2', cursive;
-    font-size: clamp(40px, 7vw, 90px);
-    font-weight: 800;
-    color: #fff;
-    text-align: center;
-    line-height: 1.1;
-    position: relative;
-    z-index: 2;
-    text-shadow: 0 4px 20px rgba(0,0,0,0.3);
-    letter-spacing: -1px;
-  }
-
-  .slide-title h1 span { color: #A5D6A7; }
-
-  .slide-title .subtitle {
-    font-size: clamp(16px, 2.5vw, 28px);
-    color: rgba(255,255,255,0.85);
-    margin-top: 12px;
-    font-weight: 600;
-    position: relative;
-    z-index: 2;
-    letter-spacing: 2px;
-    text-transform: uppercase;
-  }
-
-  .floating-leaves {
-    position: absolute;
-    inset: 0;
-    overflow: hidden;
-    pointer-events: none;
-    z-index: 1;
-  }
-
-  .leaf {
-    position: absolute;
-    font-size: 30px;
-    animation: leafFall linear infinite;
-    opacity: 0.6;
-  }
-
-  @keyframes leafFall {
-    0% { transform: translateY(-50px) rotate(0deg); opacity: 0; }
-    10% { opacity: 0.6; }
-    90% { opacity: 0.6; }
-    100% { transform: translateY(100vh) rotate(720deg); opacity: 0; }
-  }
-
-  /* ===== SLIDE 2 - WHAT IS PLASTIC ===== */
-  .slide-plastic {
-    background: linear-gradient(160deg, #FFFDE7 0%, #E8F5E9 100%);
-  }
-
-  /* ===== SLIDE 3 - WHY HARMFUL ===== */
-  .slide-harmful {
-    background: linear-gradient(160deg, #FFF8E1 0%, #FFECB3 100%);
-  }
-
-  /* ===== SLIDE 4 - WHERE DOES PLASTIC GO ===== */
-  .slide-where {
-    background: linear-gradient(160deg, #E3F2FD 0%, #B3E5FC 100%);
-  }
-
-  /* ===== SLIDE 5 - ANIMALS IN DANGER ===== */
-  .slide-animals {
-    background: linear-gradient(160deg, #FBE9E7 0%, #FFCCBC 100%);
-  }
-
-  /* ===== SLIDE 6 - IMAGINE ===== */
-  .slide-imagine {
-    background: linear-gradient(160deg, #F3E5F5 0%, #E1BEE7 100%);
-  }
-
-  /* ===== SLIDE 7 - ALTERNATIVES ===== */
-  .slide-alternatives {
-    background: linear-gradient(160deg, #E8F5E9 0%, #C8E6C9 100%);
-  }
-
-  /* ===== SLIDE 8 - WHAT CAN WE DO ===== */
-  .slide-actions {
-    background: linear-gradient(160deg, #E0F2F1 0%, #B2DFDB 100%);
-  }
-
-  /* ===== SLIDE 9 - PLANET HERO ===== */
-  .slide-hero {
-    background: linear-gradient(135deg, #1B5E20 0%, #2E7D32 50%, #F57F17 100%);
-  }
-
-  /* ===== SLIDE 10 - VIDEO ===== */
-  .slide-video {
-    background: linear-gradient(135deg, #0D1B2A 0%, #001F3F 100%);
-  }
-
-  /* ===== SHARED COMPONENTS ===== */
-  .slide-inner {
-    width: 92%;
-    max-width: 1100px;
-    padding: 30px;
-    position: relative;
-    z-index: 2;
-  }
-
-  .slide-badge {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    background: rgba(0,0,0,0.1);
-    border-radius: 50px;
-    padding: 6px 16px;
-    font-size: 13px;
-    font-weight: 700;
-    letter-spacing: 2px;
-    text-transform: uppercase;
-    margin-bottom: 16px;
-    color: rgba(0,0,0,0.6);
-  }
-
-  .slide h2 {
-    font-family: 'Baloo 2', cursive;
-    font-size: clamp(30px, 5vw, 62px);
-    font-weight: 800;
-    line-height: 1.1;
-    margin-bottom: 20px;
-  }
-
-  .two-col {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 30px;
-    align-items: center;
-    width: 100%;
-  }
-
-  .card {
-    background: rgba(255,255,255,0.75);
-    backdrop-filter: blur(10px);
-    border-radius: 24px;
-    padding: 28px;
-    box-shadow: 0 8px 32px rgba(0,0,0,0.08);
-    border: 2px solid rgba(255,255,255,0.9);
-  }
-
-  .emoji-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 16px;
-    margin-top: 16px;
-  }
-
-  .emoji-card {
-    background: rgba(255,255,255,0.8);
-    border-radius: 18px;
-    padding: 18px 12px;
-    text-align: center;
-    box-shadow: 0 4px 16px rgba(0,0,0,0.06);
-    transition: transform 0.2s;
-    cursor: default;
-  }
-
-  .emoji-card:hover { transform: translateY(-4px) scale(1.04); }
-
-  .emoji-card .icon { font-size: 44px; display: block; margin-bottom: 8px; }
-  .emoji-card .label { font-size: 13px; font-weight: 700; color: #333; }
-
-  .big-fact {
-    background: rgba(255,255,255,0.85);
-    border-radius: 20px;
-    padding: 24px;
-    text-align: center;
-    box-shadow: 0 6px 24px rgba(0,0,0,0.08);
-    margin-top: 16px;
-  }
-
-  .big-fact .number {
-    font-family: 'Baloo 2', cursive;
-    font-size: clamp(40px, 7vw, 80px);
-    font-weight: 800;
-    color: var(--red);
-    line-height: 1;
-  }
-
-  .big-fact .label {
-    font-size: clamp(13px, 1.8vw, 18px);
-    color: #555;
-    font-weight: 600;
-    margin-top: 6px;
-  }
-
-  .bullet-list {
-    list-style: none;
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-    margin-top: 16px;
-  }
-
-  .bullet-list li {
-    display: flex;
-    align-items: flex-start;
-    gap: 12px;
-    font-size: clamp(14px, 1.8vw, 20px);
-    font-weight: 600;
-    color: #333;
-  }
-
-  .bullet-list li span.dot {
-    width: 36px;
-    height: 36px;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 18px;
-    flex-shrink: 0;
-    margin-top: -1px;
-  }
-
-  .visual-box {
-    display: flex;
-    flex-direction: column;
-    gap: 14px;
-    align-items: center;
-    justify-content: center;
-    min-height: 280px;
-  }
-
-  .visual-big-emoji {
-    font-size: 100px;
-    animation: bounce 2s ease-in-out infinite;
-    filter: drop-shadow(0 8px 16px rgba(0,0,0,0.15));
-  }
-
-  @keyframes bounce { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
-
-  /* ===== PLANET HERO SLIDE ===== */
-  .hero-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 16px;
-    margin-top: 20px;
-  }
-
-  .hero-step {
-    background: rgba(255,255,255,0.15);
-    border-radius: 20px;
-    padding: 20px;
-    text-align: center;
-    backdrop-filter: blur(10px);
-    border: 2px solid rgba(255,255,255,0.25);
-    color: white;
-    transition: transform 0.2s;
-  }
-
-  .hero-step:hover { transform: translateY(-4px); }
-  .hero-step .icon { font-size: 48px; margin-bottom: 10px; display: block; }
-  .hero-step .title { font-family: 'Baloo 2', cursive; font-size: 18px; font-weight: 700; }
-  .hero-step .desc { font-size: 13px; opacity: 0.85; margin-top: 4px; }
-
-  .hero-cta {
-    text-align: center;
-    margin-top: 28px;
-  }
-
-  .hero-cta h2 {
-    font-family: 'Baloo 2', cursive;
-    font-size: clamp(28px, 5vw, 60px);
-    color: #fff;
-    text-shadow: 0 4px 20px rgba(0,0,0,0.3);
-  }
-
-  .hero-cta p {
-    font-size: clamp(14px, 2vw, 20px);
-    color: rgba(255,255,255,0.85);
-    max-width: 600px;
-    margin: 12px auto 0;
-    font-weight: 600;
-  }
-
-  .pledge-btn {
-    display: inline-block;
-    margin-top: 20px;
-    padding: 14px 36px;
-    background: #F9A825;
-    color: #1B2A1E;
-    font-family: 'Baloo 2', cursive;
-    font-size: 22px;
-    font-weight: 800;
-    border-radius: 50px;
-    cursor: pointer;
-    border: none;
-    box-shadow: 0 6px 24px rgba(249,168,37,0.5);
-    transition: transform 0.2s, box-shadow 0.2s;
-    animation: pulse 2s ease-in-out infinite;
-  }
-
-  @keyframes pulse { 0%,100% { transform: scale(1); } 50% { transform: scale(1.04); } }
-
-  .pledge-btn:hover { transform: scale(1.06); box-shadow: 0 10px 32px rgba(249,168,37,0.7); }
-
-  /* ===== PLEDGE MODAL ===== */
-  .modal-overlay {
-    display: none;
-    position: fixed;
-    inset: 0;
-    background: rgba(0,0,0,0.7);
-    z-index: 1000;
-    align-items: center;
-    justify-content: center;
-    backdrop-filter: blur(6px);
-  }
-
-  .modal-overlay.open { display: flex; }
-
-  .modal {
-    background: linear-gradient(135deg, #E8F5E9, #FFFDE7);
-    border-radius: 28px;
-    padding: 40px;
-    max-width: 520px;
-    width: 90%;
-    text-align: center;
-    box-shadow: 0 20px 80px rgba(0,0,0,0.3);
-    animation: modalIn 0.4s ease;
-  }
-
-  @keyframes modalIn { from { transform: scale(0.8); opacity: 0; } to { transform: scale(1); opacity: 1; } }
-
-  .modal h3 {
-    font-family: 'Baloo 2', cursive;
-    font-size: 32px;
-    font-weight: 800;
-    color: var(--green);
-    margin-bottom: 10px;
-  }
-
-  .modal p { font-size: 16px; color: #555; margin-bottom: 20px; font-weight: 600; }
-
-  .modal input {
-    width: 100%;
-    padding: 14px 20px;
-    border-radius: 14px;
-    border: 2px solid #C8E6C9;
-    font-size: 16px;
-    font-family: 'Nunito', sans-serif;
-    font-weight: 700;
-    outline: none;
-    margin-bottom: 14px;
-    color: #333;
-    background: white;
-  }
-
-  .modal input:focus { border-color: var(--green-light); }
-
-  .modal-btn {
-    padding: 12px 32px;
-    background: var(--green-light);
-    color: white;
-    border: none;
-    border-radius: 50px;
-    font-family: 'Baloo 2', cursive;
-    font-size: 20px;
-    font-weight: 700;
-    cursor: pointer;
-    margin: 4px;
-    transition: transform 0.15s;
-  }
-
-  .modal-btn:hover { transform: scale(1.04); }
-  .modal-btn.secondary { background: #ccc; color: #333; }
-
-  .pledges-list {
-    margin-top: 20px;
-    max-height: 140px;
-    overflow-y: auto;
-    text-align: left;
-  }
-
-  .pledge-item {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    font-size: 15px;
-    padding: 6px 0;
-    border-bottom: 1px solid #E8F5E9;
-    font-weight: 600;
-    color: #2E7D32;
-  }
-
-  /* ===== VIDEO SLIDE ===== */
-  .video-container {
-    width: 100%;
-    max-width: 900px;
-    aspect-ratio: 16/9;
-    border-radius: 20px;
-    overflow: hidden;
-    box-shadow: 0 20px 60px rgba(0,0,0,0.5);
-    border: 3px solid rgba(255,255,255,0.15);
-    position: relative;
-  }
-
-  .video-container iframe {
-    width: 100%;
-    height: 100%;
-    border: none;
-  }
-
-  .video-title {
-    font-family: 'Baloo 2', cursive;
-    font-size: clamp(20px, 3.5vw, 40px);
-    font-weight: 800;
-    color: white;
-    text-align: center;
-    margin-bottom: 20px;
-    text-shadow: 0 3px 16px rgba(0,0,0,0.4);
-  }
-
-  /* ===== NAVIGATION ===== */
-  .nav-bar {
-    position: fixed;
-    bottom: 28px;
-    left: 50%;
-    transform: translateX(-50%);
-    display: flex;
-    align-items: center;
-    gap: 100px;
-    /* background: rgba(255,255,255,0.95);
-    backdrop-filter: blur(20px); */
-    /* border-radius: 60px;
-    padding: 10px 20px;
-    box-shadow: 0 8px 40px rgba(0,0,0,0.2);
-    z-index: 100; */
-    /* border: 1px solid rgba(255,255,255,0.8); */
-  }
-
-  .nav-btn {
-    width: 44px;
-    height: 44px;
-    border-radius: 50%;
-    border: none;
-    background: var(--green-light);
-    color: white;
-    font-size: 20px;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: transform 0.15s, background 0.15s;
-    box-shadow: 0 3px 12px rgba(76,175,80,0.4);
-  }
-
-  .nav-btn:hover { transform: scale(1.1); background: var(--green); }
-  .nav-btn:disabled { background: #ddd; cursor: not-allowed; transform: none; box-shadow: none; }
-
-  .nav-dots {
-    display: flex;
-    gap: 50px;
-    align-items: center;
-  }
-
-  .nav-dot {
-    width: 8px;
-    height: 8px;
-    border-radius: 50%;
-    background: #C8E6C9;
-    cursor: pointer;
-    transition: all 0.3s;
-    border: none;
-  }
-
-  .nav-dot.active {
-    background: var(--green);
-    width: 24px;
-    border-radius: 4px;
-  }
-
-  .slide-counter {
-    font-weight: 800;
-    font-size: 14px;
-    color: #555;
-    min-width: 50px;
-    text-align: center;
-  }
-
-  /* ===== PROGRESS BAR ===== */
-  .progress-bar {
-    position: fixed;
-    top: 0;
-    left: 0;
-    height: 5px;
-    background: linear-gradient(90deg, #4CAF50, #29B6F6);
-    transition: width 0.5s ease;
-    z-index: 100;
-    border-radius: 0 4px 4px 0;
-    box-shadow: 0 2px 10px rgba(76,175,80,0.5);
-  }
-
-  /* ===== SLIDE NUMBER TAG ===== */
-  .slide-num-tag {
-    position: fixed;
-    top: 18px;
-    right: 24px;
-    background: rgba(0,0,0,0.2);
-    color: white;
-    border-radius: 20px;
-    padding: 4px 14px;
-    font-size: 13px;
-    font-weight: 700;
-    z-index: 100;
-    backdrop-filter: blur(10px);
-    letter-spacing: 1px;
-  }
-
-  /* ===== ANIMATED OCEAN ===== */
-  .ocean-anim {
-    position: relative;
-    height: 120px;
-    margin-top: 16px;
-    border-radius: 16px;
-    overflow: hidden;
-    background: linear-gradient(180deg, #B3E5FC 0%, #0277BD 100%);
-  }
-
-  .ocean-wave {
-    position: absolute;
-    bottom: 0;
-    left: -100%;
-    width: 300%;
-    height: 60px;
-    background: rgba(255,255,255,0.2);
-    border-radius: 50%;
-    animation: wave 4s linear infinite;
-  }
-
-  .ocean-wave:nth-child(2) { animation-delay: -2s; opacity: 0.4; }
-
-  @keyframes wave { 0% { transform: translateX(0); } 100% { transform: translateX(33.33%); } }
-
-  .ocean-items {
-    position: absolute;
-    inset: 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 20px;
-    font-size: 32px;
-    z-index: 2;
-  }
-
-  /* ===== QUIZ ===== */
-  .quiz-box {
-    background: rgba(255,255,255,0.85);
-    border-radius: 20px;
-    padding: 24px;
-    margin-top: 16px;
-    box-shadow: 0 6px 24px rgba(0,0,0,0.08);
-  }
-
-  .quiz-q {
-    font-family: 'Baloo 2', cursive;
-    font-size: clamp(16px, 2.5vw, 24px);
-    font-weight: 700;
-    color: #333;
-    margin-bottom: 14px;
-  }
-
-  .quiz-options {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 10px;
-  }
-
-  .quiz-opt {
-    padding: 12px 16px;
-    border-radius: 12px;
-    border: 2px solid #ddd;
-    background: white;
-    font-family: 'Nunito', sans-serif;
-    font-size: clamp(13px, 1.5vw, 17px);
-    font-weight: 700;
-    cursor: pointer;
-    transition: all 0.2s;
-    text-align: left;
-  }
-
-  .quiz-opt:hover { border-color: var(--green-light); background: var(--green-pale); transform: scale(1.02); }
-  .quiz-opt.correct { border-color: #4CAF50; background: #E8F5E9; color: #2E7D32; }
-  .quiz-opt.wrong { border-color: #E53935; background: #FFEBEE; color: #C62828; }
-
-  .quiz-result {
-    margin-top: 12px;
-    font-size: 16px;
-    font-weight: 700;
-    min-height: 22px;
-    color: var(--green);
-  }
-
-  /* ===== RESPONSIVE ===== */
-  @media (max-width: 768px) {
-    .two-col { grid-template-columns: 1fr; gap: 16px; }
-    .emoji-grid { grid-template-columns: repeat(2, 1fr); }
-    .hero-grid { grid-template-columns: 1fr 1fr; }
-    .quiz-options { grid-template-columns: 1fr; }
-    .slide-inner { padding: 16px; }
-    .nav-bar { bottom: 16px; padding: 8px 14px; }
-  }
-
-  /* ===== CONFETTI ===== */
-  .confetti-piece {
-    position: fixed;
-    width: 10px;
-    height: 10px;
-    top: -10px;
-    border-radius: 2px;
-    animation: confettiFall linear forwards;
-    pointer-events: none;
-    z-index: 999;
-  }
-
-  @keyframes confettiFall {
-    0% { transform: translateY(0) rotate(0deg); opacity: 1; }
-    100% { transform: translateY(110vh) rotate(720deg); opacity: 0; }
-  }
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+html, body {
+  width: 100vw; height: 100vh;
+  overflow: hidden;
+  font-family: 'Nunito', sans-serif;
+  background: #0a1a0a;
+}
+
+/* ───── SLIDESHOW ───── */
+.slideshow { width: 100vw; height: 100vh; position: relative; }
+
+.slide {
+  position: absolute; inset: 0;
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  opacity: 0;
+  transform: scale(0.97);
+  transition: opacity 0.65s cubic-bezier(.4,0,.2,1), transform 0.65s cubic-bezier(.4,0,.2,1);
+  pointer-events: none;
+}
+.slide.active { opacity: 1; transform: scale(1); pointer-events: all; }
+
+/* ───── PROGRESS BAR ───── */
+#progress {
+  position: fixed; top: 0; left: 0;
+  height: 4px;
+  background: linear-gradient(90deg, #56CFE1, #48BFE3, #72EFDD);
+  transition: width 0.6s ease;
+  z-index: 200;
+  border-radius: 0 3px 3px 0;
+  box-shadow: 0 0 12px rgba(86,207,225,0.6);
+}
+
+/* ───── NAV ARROWS (corners) ───── */
+.nav-btn {
+  position: fixed;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 300;
+  width: 52px; height: 52px;
+  border-radius: 50%;
+  border: 1.5px solid rgba(255,255,255,0.2);
+  background: rgba(255,255,255,0.08);
+  backdrop-filter: blur(18px) saturate(1.5);
+  -webkit-backdrop-filter: blur(18px) saturate(1.5);
+  color: rgba(255,255,255,0.85);
+  font-size: 26px;
+  cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  transition: all 0.25s ease;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+  line-height: 1;
+}
+.nav-btn:hover:not(:disabled) {
+  background: rgba(255,255,255,0.18);
+  border-color: rgba(255,255,255,0.45);
+  color: white;
+  transform: translateY(-50%) scale(1.08);
+}
+.nav-btn:disabled { opacity: 0.18; cursor: not-allowed; }
+#prevBtn { left: 16px; }
+#nextBtn { right: 16px; }
+
+/* ───── DOT INDICATORS ───── */
+.dots {
+  position: fixed; bottom: 22px; left: 50%;
+  transform: translateX(-50%);
+  display: flex; gap: 7px; z-index: 200;
+}
+.dot {
+  width: 7px; height: 7px; border-radius: 50%;
+  background: rgba(255,255,255,0.28);
+  cursor: pointer; transition: all 0.3s; border: none;
+}
+.dot.active { background: white; width: 24px; border-radius: 4px; }
+
+/* ═══════════════════════════════════════
+   SLIDE 1 — TITLE
+═══════════════════════════════════════ */
+.slide-title {
+  background: radial-gradient(ellipse at 30% 40%, #0d3b1e 0%, #051408 60%, #020c03 100%);
+  overflow: hidden;
+}
+
+.aurora { position: absolute; inset: 0; pointer-events: none; z-index: 0; }
+.aurora-band {
+  position: absolute; border-radius: 50%;
+  filter: blur(80px); opacity: 0;
+  animation: auroraFlow ease-in-out infinite;
+}
+.ab1 { width: 60vw; height: 40vh; top: -10%; left: -10%; background: rgba(34,139,34,0.35); animation-duration: 12s; }
+.ab2 { width: 50vw; height: 35vh; top: 30%; right: -5%; background: rgba(0,100,100,0.3); animation-duration: 15s; animation-delay: -5s; }
+.ab3 { width: 45vw; height: 30vh; bottom: -5%; left: 20%; background: rgba(21,128,61,0.25); animation-duration: 18s; animation-delay: -9s; }
+
+@keyframes auroraFlow {
+  0%   { opacity: 0;    transform: scale(1)    translateY(0); }
+  25%  { opacity: 1;    transform: scale(1.08) translateY(-3%); }
+  50%  { opacity: 0.75; transform: scale(1.15) translateY(-6%); }
+  75%  { opacity: 1;    transform: scale(1.08) translateY(-3%); }
+  100% { opacity: 0;    transform: scale(1)    translateY(0); }
+}
+
+.particles { position: absolute; inset: 0; pointer-events: none; z-index: 0; }
+.particle {
+  position: absolute; border-radius: 50%;
+  background: radial-gradient(circle, rgba(100,223,210,0.7), transparent);
+  animation: particleDrift linear infinite;
+}
+@keyframes particleDrift {
+  0%   { transform: translateY(0) rotate(0deg);   opacity: 0; }
+  10%  { opacity: 1; }
+  90%  { opacity: 0.6; }
+  100% { transform: translateY(-90vh) rotate(360deg); opacity: 0; }
+}
+
+.title-content {
+  position: relative; z-index: 2;
+  text-align: center;
+  display: flex; flex-direction: column; align-items: center;
+}
+
+.earth-wrap { position: relative; margin-bottom: 26px; }
+.earth-glow {
+  position: absolute; inset: -30px; border-radius: 50%;
+  background: radial-gradient(circle, rgba(72,191,163,0.25) 0%, transparent 70%);
+  animation: glowPulse 3s ease-in-out infinite;
+}
+@keyframes glowPulse { 0%,100%{transform:scale(1);opacity:0.7} 50%{transform:scale(1.2);opacity:1} }
+
+.earth-icon {
+  font-size: clamp(80px, 14vw, 140px); display: block;
+  animation: earthFloat 5s ease-in-out infinite;
+  filter: drop-shadow(0 0 30px rgba(72,191,163,0.5));
+}
+@keyframes earthFloat { 0%,100%{transform:translateY(0) rotate(-4deg)} 50%{transform:translateY(-14px) rotate(4deg)} }
+
+.title-main {
+  font-family: 'Baloo 2', cursive;
+  font-size: clamp(38px, 7vw, 88px);
+  font-weight: 900; color: #fff; line-height: 1.05;
+  letter-spacing: -1.5px;
+  text-shadow: 0 0 60px rgba(72,191,163,0.4), 0 4px 30px rgba(0,0,0,0.5);
+}
+.title-main em { font-style: normal; color: #72EFDD; }
+
+.title-sub {
+  margin-top: 16px;
+  font-size: clamp(13px, 1.8vw, 19px); font-weight: 700;
+  color: rgba(255,255,255,0.6); letter-spacing: 3px; text-transform: uppercase;
+}
+
+.title-badge {
+  margin-top: 28px; padding: 10px 30px; border-radius: 50px;
+  background: rgba(114,239,221,0.1); border: 1.5px solid rgba(114,239,221,0.3);
+  color: #72EFDD; font-size: clamp(13px, 1.4vw, 16px); font-weight: 700;
+  letter-spacing: 1px; backdrop-filter: blur(10px);
+}
+
+.leaf {
+  position: absolute; pointer-events: none; z-index: 1;
+  animation: leafDrift linear infinite; opacity: 0;
+}
+@keyframes leafDrift {
+  0%   { transform: translateY(100vh) rotate(0deg);   opacity: 0; }
+  8%   { opacity: 0.7; }
+  92%  { opacity: 0.6; }
+  100% { transform: translateY(-10vh) rotate(540deg); opacity: 0; }
+}
+
+/* ═══════════════════════════════════════
+   VIDEO SLIDES
+═══════════════════════════════════════ */
+.slide-video1, .slide-video2 {
+  background: radial-gradient(ellipse at center, #0d2137 0%, #04111f 100%);
+  overflow: hidden;
+}
+
+.video-stars { position: absolute; inset: 0; pointer-events: none; z-index: 0; }
+.star-dot {
+  position: absolute; width: 3px; height: 3px; border-radius: 50%;
+  background: white; animation: twinkle ease-in-out infinite;
+}
+@keyframes twinkle { 0%,100%{opacity:0.15} 50%{opacity:0.9} }
+
+.video-wrap {
+  position: relative; z-index: 2;
+  width: 90%; max-width: 960px;
+  display: flex; flex-direction: column; align-items: center;
+}
+
+.video-label {
+  font-family: 'Baloo 2', cursive;
+  font-size: clamp(15px, 2.5vw, 30px); font-weight: 800;
+  color: white; text-align: center; margin-bottom: 14px;
+  text-shadow: 0 3px 20px rgba(0,0,0,0.5);
+}
+.video-label span { color: #72EFDD; }
+
+.video-frame {
+  width: 100%; aspect-ratio: 16/9;
+  border-radius: 18px; overflow: hidden;
+  border: 2px solid rgba(114,239,221,0.18);
+  box-shadow: 0 20px 80px rgba(0,0,0,0.6), 0 0 0 1px rgba(114,239,221,0.07);
+}
+.video-frame iframe { width: 100%; height: 100%; border: none; display: block; }
+
+.video-caption {
+  margin-top: 12px;
+  font-size: clamp(11px, 1.2vw, 14px);
+  color: rgba(255,255,255,0.45); font-weight: 600;
+}
+
+/* ═══════════════════════════════════════
+   SLIDE 3 — KIDS ACTION (big screen)
+═══════════════════════════════════════ */
+.slide-action {
+  background: linear-gradient(135deg, #0b3d2e 0%, #0a2a1f 50%, #0d1f3c 100%);
+  overflow: hidden;
+}
+
+/* blurred decorative blobs */
+.action-bg-blob {
+  position: absolute; border-radius: 50%;
+  filter: blur(90px); pointer-events: none; z-index: 0;
+}
+.ab-blob1 { width: 55vw; height: 55vw; top: -25%; left: -15%; background: rgba(34,197,94,0.18); }
+.ab-blob2 { width: 40vw; height: 40vw; bottom: -20%; right: -10%; background: rgba(56,189,248,0.15); }
+.ab-blob3 { width: 30vw; height: 30vw; top: 30%; right: 5%; background: rgba(168,85,247,0.1); }
+
+.action-inner {
+  position: relative; z-index: 2;
+  width: 94%; max-width: 1200px;
+  display: flex; flex-direction: column; gap: clamp(10px, 1.5vh, 18px);
+}
+
+/* heading row */
+.action-heading {
+  display: flex; align-items: center; gap: 16px;
+}
+.action-heading-icon {
+  font-size: clamp(40px, 6vw, 72px);
+  filter: drop-shadow(0 0 20px rgba(250,204,21,0.5));
+  animation: heroFloat 3s ease-in-out infinite;
+}
+@keyframes heroFloat { 0%,100%{transform:translateY(0) rotate(-4deg)} 50%{transform:translateY(-8px) rotate(4deg)} }
+
+.action-title {
+  font-family: 'Baloo 2', cursive;
+  font-size: clamp(28px, 5vw, 64px);
+  font-weight: 900; color: #fff; line-height: 1;
+  text-shadow: 0 0 40px rgba(72,239,185,0.35);
+}
+.action-sub {
+  font-size: clamp(13px, 1.6vw, 20px);
+  font-weight: 700; color: rgba(255,255,255,0.6);
+  margin-top: 4px; letter-spacing: 0.3px;
+}
+
+/* action grid */
+.action-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: auto auto;
+  gap: clamp(10px, 1.2vw, 16px);
+}
+
+.act-card {
+  border-radius: 20px;
+  padding: clamp(14px, 2vw, 22px) clamp(14px, 2vw, 20px);
+  display: flex; flex-direction: column; gap: 6px;
+  backdrop-filter: blur(16px);
+  border: 1.5px solid rgba(255,255,255,0.12);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  position: relative; overflow: hidden;
+}
+.act-card::before {
+  content: ''; position: absolute;
+  inset: 0; border-radius: inherit;
+  background: rgba(255,255,255,0.04);
+  pointer-events: none;
+}
+.act-card:hover { transform: translateY(-4px); box-shadow: 0 16px 40px rgba(0,0,0,0.35); }
+
+/* colour variants */
+.ac-green  { background: rgba(16,122,64,0.55);  border-color: rgba(52,211,153,0.3);  }
+.ac-blue   { background: rgba(12,74,139,0.55);   border-color: rgba(96,165,250,0.3);  }
+.ac-teal   { background: rgba(8,95,105,0.55);    border-color: rgba(45,212,191,0.3);  }
+.ac-orange { background: rgba(124,45,18,0.55);   border-color: rgba(251,146,60,0.3);  }
+.ac-purple { background: rgba(76,29,149,0.55);   border-color: rgba(192,132,252,0.3); }
+.ac-question {
+  grid-column: span 1;
+  background: rgba(250,204,21,0.12);
+  border: 2px solid rgba(250,204,21,0.45);
+  box-shadow: 0 0 30px rgba(250,204,21,0.1);
+}
+
+.act-icon {
+  font-size: clamp(28px, 3.5vw, 44px);
+  line-height: 1;
+  filter: drop-shadow(0 2px 8px rgba(0,0,0,0.3));
+}
+.act-title {
+  font-family: 'Baloo 2', cursive;
+  font-size: clamp(14px, 1.8vw, 22px);
+  font-weight: 800; color: #fff; line-height: 1.1;
+}
+.act-desc {
+  font-size: clamp(11px, 1.1vw, 15px);
+  font-weight: 600; color: rgba(255,255,255,0.72); line-height: 1.45;
+}
+.act-desc-question {
+  font-size: clamp(13px, 1.4vw, 18px);
+  font-weight: 700; color: #fde68a; line-height: 1.4;
+}
+
+/* thought bubbles */
+.kids-bubbles {
+  display: flex; flex-wrap: wrap; gap: 6px; margin-top: 6px;
+}
+.bubble {
+  background: rgba(250,204,21,0.18);
+  border: 1px solid rgba(250,204,21,0.4);
+  border-radius: 30px;
+  padding: 4px 12px;
+  font-size: clamp(10px, 1vw, 13px);
+  font-weight: 700; color: #fef08a;
+}
+
+/* pledge banner */
+.pledge-banner {
+  background: linear-gradient(90deg, rgba(5,150,105,0.9), rgba(16,185,129,0.85));
+  border-radius: 18px;
+  padding: clamp(12px, 1.6vh, 18px) clamp(20px, 2.5vw, 36px);
+  display: flex; align-items: center; justify-content: space-between;
+  border: 1.5px solid rgba(52,211,153,0.4);
+  box-shadow: 0 8px 36px rgba(5,150,105,0.35);
+}
+.pledge-left { display: flex; align-items: center; gap: 16px; }
+.pledge-hand {
+  font-size: clamp(30px, 4vw, 52px);
+  animation: handWave 1.8s ease-in-out infinite;
+  transform-origin: 70% 80%;
+}
+@keyframes handWave { 0%,100%{transform:rotate(-8deg)} 50%{transform:rotate(8deg)} }
+.pledge-words { display: flex; flex-direction: column; gap: 3px; }
+.pledge-title {
+  font-family: 'Baloo 2', cursive;
+  font-size: clamp(15px, 2vw, 24px); font-weight: 900;
+  color: #fff; letter-spacing: 0.5px;
+}
+.pledge-oath {
+  font-size: clamp(11px, 1.2vw, 16px); font-weight: 700;
+  color: rgba(255,255,255,0.88); font-style: italic; line-height: 1.4;
+}
+.pledge-right {
+  font-size: clamp(22px, 3vw, 38px); letter-spacing: 4px;
+  filter: drop-shadow(0 2px 8px rgba(0,0,0,0.2));
+}
+
+/* ───── ANIMATIONS ───── */
+@keyframes fadeUp { from { opacity:0; transform:translateY(16px); } to { opacity:1; transform:translateY(0); } }
+
+.active .title-content > * { animation: fadeUp 0.7s ease both; }
+.active .title-content > *:nth-child(1) { animation-delay: 0.08s; }
+.active .title-content > *:nth-child(2) { animation-delay: 0.22s; }
+.active .title-content > *:nth-child(3) { animation-delay: 0.36s; }
+.active .title-content > *:nth-child(4) { animation-delay: 0.48s; }
+
+.active .action-heading  { animation: fadeUp 0.6s 0.05s ease both; }
+.active .act-card        { animation: fadeUp 0.55s ease both; }
+.active .act-card:nth-child(1) { animation-delay: 0.12s; }
+.active .act-card:nth-child(2) { animation-delay: 0.20s; }
+.active .act-card:nth-child(3) { animation-delay: 0.28s; }
+.active .act-card:nth-child(4) { animation-delay: 0.36s; }
+.active .act-card:nth-child(5) { animation-delay: 0.44s; }
+.active .act-card:nth-child(6) { animation-delay: 0.52s; }
+.active .pledge-banner   { animation: fadeUp 0.6s 0.6s ease both; }
+
+@media (max-width: 900px) {
+  .action-grid { grid-template-columns: repeat(2, 1fr); }
+  .ac-question { grid-column: span 2; }
+}
+@media (max-width: 600px) {
+  .action-grid { grid-template-columns: 1fr; }
+  .ac-question { grid-column: span 1; }
+  #prevBtn { left: 8px; }
+  #nextBtn { right: 8px; }
+  .nav-btn { width: 40px; height: 40px; font-size: 20px; }
+}
 </style>
 </head>
 <body>
 
-<div class="progress-bar" id="progressBar"></div>
-<div class="slide-num-tag" id="slideNumTag">1 / 10</div>
+<div id="progress"></div>
+<button class="nav-btn" id="prevBtn" onclick="go(-1)" disabled>&#8249;</button>
+<button class="nav-btn" id="nextBtn" onclick="go(1)">&#8250;</button>
+<div class="dots" id="dots"></div>
 
-<div class="slideshow" id="slideshow">
+<div class="slideshow">
 
-  <!-- SLIDE 1: TITLE -->
-  <div class="slide slide-title active" data-slide="0">
-    <div class="floating-leaves" id="leavesContainer"></div>
-    <div class="earth-emoji">🌍</div>
-    <h1>A Day<br><span>Without Plastic</span></h1>
-    <p class="subtitle">🌿 Earth Day Special Presentation 🌿</p>
-  </div>
-
-  <!-- SLIDE 2: WHAT IS PLASTIC -->
-  <div class="slide slide-plastic" data-slide="1">
-    <div class="slide-inner">
-      <div class="two-col">
-        <div>
-          <div class="slide-badge">📚 Let's Learn!</div>
-          <h2 style="color:#1B5E20">What is Plastic?</h2>
-          <ul class="bullet-list">
-            <li><span class="dot" style="background:#E8F5E9">🧪</span> A man-made material invented by scientists</li>
-            <li><span class="dot" style="background:#E8F5E9">💡</span> Light, cheap, and very strong</li>
-            <li><span class="dot" style="background:#E8F5E9">🏭</span> Made from oil and chemicals underground</li>
-            <li><span class="dot" style="background:#E8F5E9">📦</span> Used in bottles, bags, toys, and packaging</li>
-          </ul>
-          <div class="big-fact" style="margin-top:18px">
-            <div class="number">8 million</div>
-            <div class="label">tons of plastic enter our oceans every single year!</div>
-          </div>
-        </div>
-        <div class="visual-box">
-          <div class="emoji-grid">
-            <div class="emoji-card"><span class="icon">🧴</span><span class="label">Bottles</span></div>
-            <div class="emoji-card"><span class="icon">🛍️</span><span class="label">Bags</span></div>
-            <div class="emoji-card"><span class="icon">🧸</span><span class="label">Toys</span></div>
-            <div class="emoji-card"><span class="icon">🥤</span><span class="label">Cups</span></div>
-            <div class="emoji-card"><span class="icon">🍱</span><span class="label">Containers</span></div>
-            <div class="emoji-card"><span class="icon">🎈</span><span class="label">Balloons</span></div>
-          </div>
-        </div>
+  <!-- ══════ SLIDE 1: TITLE ══════ -->
+  <div class="slide slide-title active" id="slide-0">
+    <div class="aurora">
+      <div class="aurora-band ab1"></div>
+      <div class="aurora-band ab2"></div>
+      <div class="aurora-band ab3"></div>
+    </div>
+    <div class="particles" id="particles"></div>
+    <div id="leaves"></div>
+    <div class="title-content">
+      <div class="earth-wrap">
+        <div class="earth-glow"></div>
+        <span class="earth-icon">🌍</span>
       </div>
+      <h1 class="title-main">A Day Without<br><em>Plastic</em></h1>
+      <p class="title-sub">🌿 Earth Day Special Presentation 🌿</p>
+      <div class="title-badge">For the Young Planet Heroes of Our School 🦸</div>
     </div>
   </div>
 
-  <!-- SLIDE 3: WHY HARMFUL -->
-  <div class="slide slide-harmful" data-slide="2">
-    <div class="slide-inner">
-      <div class="two-col">
-        <div class="visual-box">
-          <div class="visual-big-emoji">♻️</div>
-          <div class="big-fact" style="background: rgba(255,255,255,0.8);">
-            <div class="number" style="color:#E65100">450</div>
-            <div class="label">years for a plastic bottle to decompose!</div>
-          </div>
-          <div class="big-fact" style="background: rgba(255,255,255,0.8); margin-top: 0;">
-            <div class="number" style="color:#C62828; font-size: clamp(30px,5vw,60px)">1,000+</div>
-            <div class="label">years for a plastic bag to break down</div>
-          </div>
-        </div>
-        <div>
-          <div class="slide-badge">⚠️ Danger Alert!</div>
-          <h2 style="color:#BF360C">Why is Plastic Harmful?</h2>
-          <ul class="bullet-list">
-            <li><span class="dot" style="background:#FFF3E0">💀</span> Never truly disappears — only breaks into tiny pieces</li>
-            <li><span class="dot" style="background:#FFF3E0">🌊</span> Pollutes our rivers, oceans, and land</li>
-            <li><span class="dot" style="background:#FFF3E0">🐠</span> Kills ocean animals and birds</li>
-            <li><span class="dot" style="background:#FFF3E0">🔥</span> Burning plastic releases toxic gases</li>
-            <li><span class="dot" style="background:#FFF3E0">🧬</span> Microplastics enter our food and water!</li>
-          </ul>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- SLIDE 4: WHERE DOES PLASTIC GO -->
-  <div class="slide slide-where" data-slide="3">
-    <div class="slide-inner" style="text-align:center">
-      <div class="slide-badge" style="margin:0 auto 16px">🗺️ The Plastic Journey</div>
-      <h2 style="color:#01579B">Where Does Plastic Go?</h2>
-      <div style="display:flex; gap:16px; margin-top:20px; flex-wrap:wrap; justify-content:center">
-        <div class="card" style="flex:1; min-width:220px; text-align:center">
-          <div style="font-size:52px; margin-bottom:12px">🗑️</div>
-          <h3 style="font-family:'Baloo 2',cursive; color:#01579B; font-size:20px; margin-bottom:8px">1. Thrown Away</h3>
-          <p style="font-size:14px; color:#555; font-weight:600">We use plastic once and toss it in the bin</p>
-        </div>
-        <div style="display:flex;align-items:center;font-size:28px;color:#0277BD">→</div>
-        <div class="card" style="flex:1; min-width:220px; text-align:center">
-          <div style="font-size:52px; margin-bottom:12px">🌍</div>
-          <h3 style="font-family:'Baloo 2',cursive; color:#2E7D32; font-size:20px; margin-bottom:8px">2. Lands on Earth</h3>
-          <p style="font-size:14px; color:#555; font-weight:600">Wind blows it onto land, forests, and streets</p>
-        </div>
-        <div style="display:flex;align-items:center;font-size:28px;color:#0277BD">→</div>
-        <div class="card" style="flex:1; min-width:220px; text-align:center">
-          <div style="font-size:52px; margin-bottom:12px">🌊</div>
-          <h3 style="font-family:'Baloo 2',cursive; color:#006064; font-size:20px; margin-bottom:8px">3. Reaches Ocean</h3>
-          <p style="font-size:14px; color:#555; font-weight:600">Rain washes it into rivers, then to the sea</p>
-        </div>
-      </div>
-      <div class="ocean-anim" style="margin-top:20px">
-        <div class="ocean-wave"></div>
-        <div class="ocean-wave"></div>
-        <div class="ocean-items">
-          🧴 &nbsp; 🛍️ &nbsp; 🥤 &nbsp; 🍶 &nbsp; 🎈
-        </div>
-      </div>
-      <p style="margin-top:14px; font-size:clamp(13px,1.8vw,18px); color:#01579B; font-weight:700">
-        💡 A bottle you throw today might still be here when you are a grandparent!
-      </p>
-    </div>
-  </div>
-
-  <!-- SLIDE 5: ANIMALS IN DANGER -->
-  <div class="slide slide-animals" data-slide="4">
-    <div class="slide-inner">
-      <div class="two-col">
-        <div>
-          <div class="slide-badge">🐾 Help Animals!</div>
-          <h2 style="color:#BF360C">Animals in Danger</h2>
-          <p style="font-size:clamp(13px,1.8vw,18px); color:#555; font-weight:600; margin-bottom:16px">
-            Animals can't tell the difference between plastic and food. Here's what happens:
-          </p>
-          <ul class="bullet-list">
-            <li><span class="dot" style="background:#FBE9E7">🐢</span> Sea turtles eat plastic bags thinking they're jellyfish</li>
-            <li><span class="dot" style="background:#FBE9E7">🐟</span> Fish get trapped in plastic rings and nets</li>
-            <li><span class="dot" style="background:#FBE9E7">🐦</span> Birds feed plastic to their chicks by mistake</li>
-            <li><span class="dot" style="background:#FBE9E7">🐳</span> Whales die with stomachs full of plastic bags</li>
-          </ul>
-          <div class="big-fact" style="margin-top:18px; background:#fff3e0">
-            <div class="number" style="color:#BF360C; font-size:clamp(30px,5vw,60px)">1 million</div>
-            <div class="label">sea birds die from plastic every year 😢</div>
-          </div>
-        </div>
-        <div class="visual-box">
-          <div style="font-size:90px; animation: bounce 2s ease-in-out infinite">🐢</div>
-          <div style="font-size:70px; animation: bounce 2s ease-in-out infinite; animation-delay:0.5s">🐟</div>
-          <div style="font-size:70px; animation: bounce 2s ease-in-out infinite; animation-delay:1s">🐦</div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- SLIDE 6: QUICK QUIZ -->
-  <div class="slide slide-imagine" data-slide="5">
-    <div class="slide-inner">
-      <div style="text-align:center; margin-bottom:16px">
-        <div class="slide-badge" style="margin:0 auto 12px">🧠 Quick Quiz!</div>
-        <h2 style="color:#6A1B9A">Test Your Knowledge!</h2>
-      </div>
-      <div class="quiz-box">
-        <div class="quiz-q" id="quizQuestion">How long does it take for a plastic bottle to decompose?</div>
-        <div class="quiz-options" id="quizOptions">
-          <button class="quiz-opt" onclick="checkAnswer(this, false)">🌱 10 years</button>
-          <button class="quiz-opt" onclick="checkAnswer(this, true)">⏳ 450 years</button>
-          <button class="quiz-opt" onclick="checkAnswer(this, false)">🌙 1 year</button>
-          <button class="quiz-opt" onclick="checkAnswer(this, false)">🔥 50 years</button>
-        </div>
-        <div class="quiz-result" id="quizResult"></div>
-      </div>
-      <div class="quiz-box" style="margin-top:14px">
-        <div class="quiz-q">Which is the BEST eco-friendly alternative to plastic bags?</div>
-        <div class="quiz-options">
-          <button class="quiz-opt" onclick="checkAnswer2(this, false)">📦 Paper bag (single use)</button>
-          <button class="quiz-opt" onclick="checkAnswer2(this, true)">🛍️ Cloth bag (reusable)</button>
-          <button class="quiz-opt" onclick="checkAnswer2(this, false)">🗑️ Bigger plastic bag</button>
-          <button class="quiz-opt" onclick="checkAnswer2(this, false)">🎁 Bubble wrap</button>
-        </div>
-        <div class="quiz-result" id="quizResult2"></div>
-      </div>
-    </div>
-  </div>
-
-  <!-- SLIDE 7: IMAGINE A DAY WITHOUT -->
-  <div class="slide slide-imagine" data-slide="6">
-    <div class="slide-inner" style="text-align:center">
-      <div class="slide-badge" style="margin:0 auto 12px">💭 Imagine This...</div>
-      <h2 style="color:#6A1B9A">Imagine a Day Without Plastic</h2>
-      <p style="font-size:clamp(14px,2vw,20px); color:#555; font-weight:600; max-width:600px; margin:0 auto 24px">
-        "What if we had just ONE whole day without using any plastic at all?"
-      </p>
-      <div style="display:flex; gap:14px; justify-content:center; flex-wrap:wrap">
-        <div class="card" style="text-align:center; flex:1; min-width:180px; max-width:200px">
-          <div style="font-size:56px; margin-bottom:10px">🚫🛍️</div>
-          <h3 style="font-family:'Baloo 2',cursive; color:#6A1B9A; font-size:17px">No Plastic Bags</h3>
-          <p style="font-size:13px; color:#777; font-weight:600; margin-top:6px">Use cloth or jute bags instead!</p>
-        </div>
-        <div class="card" style="text-align:center; flex:1; min-width:180px; max-width:200px">
-          <div style="font-size:56px; margin-bottom:10px">🚫🥤</div>
-          <h3 style="font-family:'Baloo 2',cursive; color:#6A1B9A; font-size:17px">No Plastic Bottles</h3>
-          <p style="font-size:13px; color:#777; font-weight:600; margin-top:6px">Switch to steel or glass!</p>
-        </div>
-        <div class="card" style="text-align:center; flex:1; min-width:180px; max-width:200px">
-          <div style="font-size:56px; margin-bottom:10px">🚫📦</div>
-          <h3 style="font-family:'Baloo 2',cursive; color:#6A1B9A; font-size:17px">No Wrappers</h3>
-          <p style="font-size:13px; color:#777; font-weight:600; margin-top:6px">Choose paper or loose items!</p>
-        </div>
-      </div>
-      <div style="margin-top:20px; background:rgba(255,255,255,0.7); border-radius:18px; padding:16px; max-width:600px; margin-left:auto; margin-right:auto">
-        <p style="font-size:clamp(15px,2vw,20px); font-weight:700; color:#6A1B9A">
-          🤔 What would YOU use instead of plastic today?
-        </p>
-      </div>
-    </div>
-  </div>
-
-  <!-- SLIDE 8: ALTERNATIVES -->
-  <div class="slide slide-alternatives" data-slide="7">
-    <div class="slide-inner">
-      <div class="two-col">
-        <div>
-          <div class="slide-badge">🌱 Green Choices!</div>
-          <h2 style="color:#1B5E20">What Can We Use Instead?</h2>
-          <ul class="bullet-list">
-            <li><span class="dot" style="background:#E8F5E9">🛍️</span> <span><strong>Cloth bags</strong> — reuse hundreds of times!</span></li>
-            <li><span class="dot" style="background:#E8F5E9">🫙</span> <span><strong>Steel or glass bottles</strong> — last for years!</span></li>
-            <li><span class="dot" style="background:#E8F5E9">📰</span> <span><strong>Paper packaging</strong> — biodegrades naturally!</span></li>
-            <li><span class="dot" style="background:#E8F5E9">🪵</span> <span><strong>Bamboo products</strong> — grows back fast!</span></li>
-            <li><span class="dot" style="background:#E8F5E9">🍌</span> <span><strong>Beeswax wraps</strong> — natural food storage!</span></li>
-          </ul>
-        </div>
-        <div class="visual-box">
-          <div class="emoji-grid">
-            <div class="emoji-card"><span class="icon">🛍️</span><span class="label">Cloth Bag</span></div>
-            <div class="emoji-card"><span class="icon">🫙</span><span class="label">Steel Bottle</span></div>
-            <div class="emoji-card"><span class="icon">🍱</span><span class="label">Lunch Box</span></div>
-            <div class="emoji-card"><span class="icon">🪵</span><span class="label">Bamboo</span></div>
-            <div class="emoji-card"><span class="icon">📰</span><span class="label">Paper Wrap</span></div>
-            <div class="emoji-card"><span class="icon">♻️</span><span class="label">Recycle!</span></div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- SLIDE 9: WHAT CAN WE DO -->
-  <div class="slide slide-actions" data-slide="8">
-    <div class="slide-inner" style="text-align:center">
-      <div class="slide-badge" style="margin:0 auto 12px">🙌 Take Action!</div>
-      <h2 style="color:#004D40">What Can WE Do?</h2>
-      <div class="hero-grid" style="margin-top:20px">
-        <div class="hero-step" style="background:rgba(0,77,64,0.08); border:2px solid rgba(0,77,64,0.2); color:#004D40">
-          <span class="icon">🛍️</span>
-          <div class="title">Say NO!</div>
-          <div class="desc" style="color:#00695C">Refuse plastic bags at shops</div>
-        </div>
-        <div class="hero-step" style="background:rgba(0,77,64,0.08); border:2px solid rgba(0,77,64,0.2); color:#004D40">
-          <span class="icon">🫙</span>
-          <div class="title">Bring Your Own</div>
-          <div class="desc" style="color:#00695C">Carry a reusable bottle daily</div>
-        </div>
-        <div class="hero-step" style="background:rgba(0,77,64,0.08); border:2px solid rgba(0,77,64,0.2); color:#004D40">
-          <span class="icon">♻️</span>
-          <div class="title">3 R's</div>
-          <div class="desc" style="color:#00695C">Reduce, Reuse, Recycle</div>
-        </div>
-        <div class="hero-step" style="background:rgba(0,77,64,0.08); border:2px solid rgba(0,77,64,0.2); color:#004D40">
-          <span class="icon">📢</span>
-          <div class="title">Spread the Word</div>
-          <div class="desc" style="color:#00695C">Tell your family & friends</div>
-        </div>
-        <div class="hero-step" style="background:rgba(0,77,64,0.08); border:2px solid rgba(0,77,64,0.2); color:#004D40">
-          <span class="icon">🧹</span>
-          <div class="title">Clean Up!</div>
-          <div class="desc" style="color:#00695C">Join a park or beach cleanup</div>
-        </div>
-        <div class="hero-step" style="background:rgba(0,77,64,0.08); border:2px solid rgba(0,77,64,0.2); color:#004D40">
-          <span class="icon">🌱</span>
-          <div class="title">Plant a Tree</div>
-          <div class="desc" style="color:#00695C">Help nature heal and grow</div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- SLIDE 10: BE A PLANET HERO -->
-  <div class="slide slide-hero" data-slide="9">
-    <div class="slide-inner">
-      <div class="hero-cta">
-        <div style="font-size:90px; animation:earthSpin 4s ease-in-out infinite; margin-bottom:10px">🦸</div>
-        <h2>Be a Planet Hero!</h2>
-        <p>You don't have to be big to help our planet. Even the smallest action — like saying NO to a plastic bag — can make a HUGE difference! You can all be Planet Heroes!</p>
-        <button class="pledge-btn" onclick="openPledge()">✋ Take the Planet Pledge!</button>
-      </div>
-    </div>
-  </div>
-
-  <!-- SLIDE 11: VIDEO -->
-  <div class="slide slide-video" data-slide="10">
-    <div class="slide-inner" style="text-align:center; max-width:950px">
-      <div class="video-title">🎬 Watch: The Plastic Problem</div>
-      <div class="video-container">
+  <!-- ══════ SLIDE 2: VIDEO 1 ══════ -->
+  <div class="slide slide-video1" id="slide-1">
+    <div class="video-stars" id="stars1"></div>
+    <div class="video-wrap">
+      <div class="video-label">🎬 Let's Watch — <span>What is Plastic & Why It's Harmful?</span></div>
+      <div class="video-frame">
         <iframe
-          src="https://www.youtube.com/embed/vksiPlwtvw0?si=vW0XNF0MIZOiLS72"
-          title="Plastic Pollution for Kids"
+          src="https://www.youtube.com/embed/10Wa8RXb9Rw?rel=0&modestbranding=1&color=white"
+          title="What is Plastic and Why Is It Harmful"
           allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
           allowfullscreen>
         </iframe>
       </div>
-      <p style="color:rgba(255,255,255,0.7); font-size:14px; margin-top:14px; font-weight:600">
-        🌍 After watching — what's ONE thing you'll change starting today?
-      </p>
+      <p class="video-caption">Watch carefully — we'll talk about this right after! 👀</p>
+    </div>
+  </div>
+
+  <!-- ══════ SLIDE 3: KIDS ACTION SLIDE (big screen) ══════ -->
+  <div class="slide slide-action" id="slide-2">
+
+    <div class="action-bg-blob ab-blob1"></div>
+    <div class="action-bg-blob ab-blob2"></div>
+    <div class="action-bg-blob ab-blob3"></div>
+
+    <div class="action-inner">
+
+      <!-- TOP: heading -->
+      <div class="action-heading">
+        <span class="action-heading-icon">🦸</span>
+        <div>
+          <div class="action-title">YOU Can Save Our Planet!</div>
+          <div class="action-sub">Small actions today = a BIG difference tomorrow 🌍</div>
+        </div>
+      </div>
+
+      <!-- MIDDLE: 3 action cards + question -->
+      <div class="action-grid">
+
+        <!-- Action cards -->
+        <div class="act-card ac-green">
+          <div class="act-icon">🛍️</div>
+          <div class="act-title">Carry a Cloth Bag</div>
+          <div class="act-desc">Say NO to plastic bags every time you go shopping with family</div>
+        </div>
+
+        <div class="act-card ac-blue">
+          <div class="act-icon">🫙</div>
+          <div class="act-title">Bring Your Own Bottle</div>
+          <div class="act-desc">Bring a steel or glass bottle to school — skip single-use plastic cups</div>
+        </div>
+
+        <div class="act-card ac-teal">
+          <div class="act-icon">🍱</div>
+          <div class="act-title">Use a Lunchbox</div>
+          <div class="act-desc">Pack your lunch in a reusable box — ditch the plastic wrappers</div>
+        </div>
+
+        <div class="act-card ac-orange">
+          <div class="act-icon">📢</div>
+          <div class="act-title">Spread the Word</div>
+          <div class="act-desc">Tell your parents, friends & family what you learned today!</div>
+        </div>
+
+        <div class="act-card ac-purple">
+          <div class="act-icon">♻️</div>
+          <div class="act-title">Sort Your Rubbish</div>
+          <div class="act-desc">Put plastic in the recycling bin — help it get a second life</div>
+        </div>
+
+        <!-- Question card — wider -->
+        <div class="act-card ac-question">
+          <div class="act-icon">🤔</div>
+          <div class="act-title">Your Turn!</div>
+          <div class="act-desc-question">What is <strong>ONE plastic item</strong> you will skip starting <strong>tomorrow?</strong></div>
+          <div class="kids-bubbles">
+            <div class="bubble">A straw? 🥤</div>
+            <div class="bubble">A plastic bag? 🛍️</div>
+            <div class="bubble">A wrapper? 🍬</div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- BOTTOM: pledge banner -->
+      <div class="pledge-banner">
+        <div class="pledge-left">
+          <span class="pledge-hand">✋</span>
+          <div class="pledge-words">
+            <div class="pledge-title">The Planet Hero Pledge</div>
+            <div class="pledge-oath">"I promise to use less plastic and help protect our beautiful Earth — starting TODAY!"</div>
+          </div>
+        </div>
+        <div class="pledge-right">🌿🌊🐢🌍</div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ══════ SLIDE 4: ENDING VIDEO ══════ -->
+  <div class="slide slide-video2" id="slide-3">
+    <div class="video-stars" id="stars2"></div>
+    <div class="video-wrap">
+      <div class="video-label">🌟 <span>Our Planet Needs Us — Let's Make a Difference!</span></div>
+      <div class="video-frame">
+        <iframe
+          src="https://www.youtube.com/embed/vksiPlwtvw0?rel=0&modestbranding=1&color=white"
+          title="Planet Earth Ending Video"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+          allowfullscreen>
+        </iframe>
+      </div>
+      <p class="video-caption">🌍 Happy Earth Day! Together, we can make our planet beautiful again. 💚</p>
     </div>
   </div>
 
 </div>
 
-<!-- NAVIGATION -->
-<div class="nav-bar">
-  <button class="nav-btn" id="prevBtn" onclick="changeSlide(-1)" disabled>◀</button>
-  <div class="nav-dots" id="navDots"></div>
-  <span class="slide-counter" id="slideCounter">1/11</span>
-  <button class="nav-btn" id="nextBtn" onclick="changeSlide(1)">▶</button>
-</div>
-
-<!-- PLEDGE MODAL -->
-<div class="modal-overlay" id="pledgeModal">
-  <div class="modal">
-    <div style="font-size:56px; margin-bottom:8px">✋🌿</div>
-    <h3>Planet Hero Pledge!</h3>
-    <p>Enter your name and make your promise to our planet!</p>
-    <input type="text" id="pledgeName" placeholder="Your name here..." maxlength="30" onkeypress="if(event.key==='Enter')addPledge()">
-    <br>
-    <button class="modal-btn" onclick="addPledge()">🌍 I Pledge!</button>
-    <button class="modal-btn secondary" onclick="closePledge()">Close</button>
-    <div class="pledges-list" id="pledgesList"></div>
-  </div>
-</div>
-
 <script>
-  let currentSlide = 0;
-  const totalSlides = 11;
-  const slides = document.querySelectorAll('.slide');
-  const pledges = [];
+  const TOTAL = 4;
+  let cur = 0;
 
-  // Create floating leaves
-  const leafEmojis = ['🌿', '🍃', '🌱', '🌾', '🍀'];
-  const container = document.getElementById('leavesContainer');
-  for (let i = 0; i < 12; i++) {
-    const leaf = document.createElement('div');
-    leaf.className = 'leaf';
-    leaf.textContent = leafEmojis[Math.floor(Math.random() * leafEmojis.length)];
-    leaf.style.left = Math.random() * 100 + '%';
-    leaf.style.animationDuration = (8 + Math.random() * 8) + 's';
-    leaf.style.animationDelay = (-Math.random() * 16) + 's';
-    leaf.style.fontSize = (20 + Math.random() * 20) + 'px';
-    container.appendChild(leaf);
+  // dots
+  const dotsEl = document.getElementById('dots');
+  for (let i = 0; i < TOTAL; i++) {
+    const d = document.createElement('button');
+    d.className = 'dot' + (i === 0 ? ' active' : '');
+    d.onclick = () => goTo(i);
+    dotsEl.appendChild(d);
   }
 
-  // Create nav dots
-  const dotsContainer = document.getElementById('navDots');
-  for (let i = 0; i < totalSlides; i++) {
-    const dot = document.createElement('button');
-    dot.className = 'nav-dot' + (i === 0 ? ' active' : '');
-    dot.onclick = () => goToSlide(i);
-    dotsContainer.appendChild(dot);
+  function go(dir) { goTo(cur + dir); }
+
+  function goTo(idx) {
+    if (idx < 0 || idx >= TOTAL) return;
+    document.getElementById('slide-' + cur).classList.remove('active');
+    cur = idx;
+    document.getElementById('slide-' + cur).classList.add('active');
+    document.querySelectorAll('.dot').forEach((d,i) => d.classList.toggle('active', i === cur));
+    document.getElementById('prevBtn').disabled = cur === 0;
+    document.getElementById('nextBtn').disabled = cur === TOTAL - 1;
+    document.getElementById('progress').style.width = ((cur + 1) / TOTAL * 100) + '%';
   }
 
-  function updateUI() {
-    const progress = ((currentSlide + 1) / totalSlides) * 100;
-    document.getElementById('progressBar').style.width = progress + '%';
-    document.getElementById('slideNumTag').textContent = (currentSlide + 1) + ' / ' + totalSlides;
-    document.getElementById('slideCounter').textContent = (currentSlide + 1) + '/' + totalSlides;
-    document.getElementById('prevBtn').disabled = currentSlide === 0;
-    document.getElementById('nextBtn').disabled = currentSlide === totalSlides - 1;
-    document.querySelectorAll('.nav-dot').forEach((d, i) => {
-      d.classList.toggle('active', i === currentSlide);
-    });
-  }
-
-  function goToSlide(index) {
-    slides[currentSlide].classList.remove('active');
-    slides[currentSlide].classList.add('exit');
-    setTimeout(() => slides[currentSlide - (index > currentSlide ? 0 : 0)].classList.remove('exit'), 600);
-    const prev = currentSlide;
-    currentSlide = index;
-    setTimeout(() => { slides[prev].classList.remove('exit'); }, 600);
-    slides[currentSlide].classList.add('active');
-    updateUI();
-  }
-
-  function changeSlide(dir) {
-    const next = currentSlide + dir;
-    if (next < 0 || next >= totalSlides) return;
-    slides[currentSlide].classList.remove('active');
-    slides[currentSlide].classList.add('exit');
-    const prev = currentSlide;
-    currentSlide = next;
-    setTimeout(() => slides[prev].classList.remove('exit'), 600);
-    slides[currentSlide].classList.add('active');
-    updateUI();
-  }
-
-  // Keyboard navigation
   document.addEventListener('keydown', e => {
-    if (e.key === 'ArrowRight' || e.key === 'ArrowDown') changeSlide(1);
-    if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') changeSlide(-1);
+    if (e.key === 'ArrowRight' || e.key === 'ArrowDown') go(1);
+    if (e.key === 'ArrowLeft'  || e.key === 'ArrowUp')   go(-1);
   });
 
-  // Quiz
-  function checkAnswer(btn, correct) {
-    const opts = document.querySelectorAll('#quizOptions .quiz-opt');
-    opts.forEach(o => o.disabled = true);
-    btn.classList.add(correct ? 'correct' : 'wrong');
-    if (!correct) opts[1].classList.add('correct');
-    document.getElementById('quizResult').textContent = correct
-      ? '🎉 Amazing! That\'s correct! Plastic takes 450 years to break down!'
-      : '❌ Not quite! A plastic bottle takes 450 years to decompose!';
+  document.getElementById('progress').style.width = (1 / TOTAL * 100) + '%';
+
+  // particles
+  const pEl = document.getElementById('particles');
+  for (let i = 0; i < 22; i++) {
+    const p = document.createElement('div');
+    p.className = 'particle';
+    const size = 4 + Math.random() * 8;
+    p.style.cssText = `width:${size}px;height:${size}px;left:${Math.random()*100}%;bottom:-${size}px;animation-duration:${10+Math.random()*14}s;animation-delay:${-Math.random()*20}s;`;
+    pEl.appendChild(p);
   }
 
-  let q2done = false;
-  function checkAnswer2(btn, correct) {
-    if (q2done) return;
-    q2done = true;
-    const parent = btn.closest('.quiz-box');
-    const opts = parent.querySelectorAll('.quiz-opt');
-    opts.forEach(o => o.disabled = true);
-    btn.classList.add(correct ? 'correct' : 'wrong');
-    if (!correct) opts[1].classList.add('correct');
-    document.getElementById('quizResult2').textContent = correct
-      ? '🎉 Perfect! Reusable cloth bags are the best choice!'
-      : '❌ Cloth bags win! They can be used hundreds of times!';
+  // leaves
+  const leavesEl = document.getElementById('leaves');
+  const leafEmojis = ['🌿','🍃','🌱','🍀','🌾'];
+  for (let i = 0; i < 10; i++) {
+    const l = document.createElement('div');
+    l.className = 'leaf';
+    l.textContent = leafEmojis[i % 5];
+    l.style.cssText = `left:${Math.random()*100}%;font-size:${18+Math.random()*16}px;animation-duration:${14+Math.random()*12}s;animation-delay:${-Math.random()*25}s;`;
+    leavesEl.appendChild(l);
   }
 
-  // Pledge
-  function openPledge() {
-    document.getElementById('pledgeModal').classList.add('open');
-    document.getElementById('pledgeName').focus();
-  }
-
-  function closePledge() {
-    document.getElementById('pledgeModal').classList.remove('open');
-  }
-
-  function addPledge() {
-    const name = document.getElementById('pledgeName').value.trim();
-    if (!name) return;
-    pledges.push(name);
-    document.getElementById('pledgeName').value = '';
-    renderPledges();
-    shootConfetti();
-  }
-
-  function renderPledges() {
-    const list = document.getElementById('pledgesList');
-    list.innerHTML = pledges.map(n =>
-      `<div class="pledge-item">🌿 <strong>${n}</strong> pledges to protect our planet!</div>`
-    ).join('');
-    list.scrollTop = list.scrollHeight;
-  }
-
-  function shootConfetti() {
-    const colors = ['#4CAF50','#F9A825','#29B6F6','#E91E63','#FF5722','#9C27B0'];
-    for (let i = 0; i < 60; i++) {
-      setTimeout(() => {
-        const c = document.createElement('div');
-        c.className = 'confetti-piece';
-        c.style.cssText = `
-          left:${Math.random()*100}vw;
-          background:${colors[Math.floor(Math.random()*colors.length)]};
-          width:${6+Math.random()*10}px;
-          height:${6+Math.random()*10}px;
-          border-radius:${Math.random()>0.5?'50%':'2px'};
-          animation-duration:${2+Math.random()*2}s;
-          animation-delay:${Math.random()*0.5}s;
-        `;
-        document.body.appendChild(c);
-        setTimeout(() => c.remove(), 4000);
-      }, i * 30);
+  // stars
+  function makeStars(elId) {
+    const el = document.getElementById(elId);
+    for (let i = 0; i < 55; i++) {
+      const s = document.createElement('div');
+      s.className = 'star-dot';
+      const sz = 1.5 + Math.random() * 2.5;
+      s.style.cssText = `width:${sz}px;height:${sz}px;left:${Math.random()*100}%;top:${Math.random()*100}%;animation-duration:${2+Math.random()*4}s;animation-delay:${-Math.random()*6}s;opacity:${0.15+Math.random()*0.35};`;
+      el.appendChild(s);
     }
   }
-
-  updateUI();
+  makeStars('stars1');
+  makeStars('stars2');
 </script>
 </body>
 </html>
