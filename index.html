@@ -220,14 +220,15 @@ html, body {
 }
 
 /* ═══════════════════════════════════════
-   SLIDE 3 — KIDS ACTION (big screen)
+   SLIDE 3 — KIDS ACTION (big screen, fits 100vh)
 ═══════════════════════════════════════ */
 .slide-action {
   background: linear-gradient(135deg, #0b3d2e 0%, #0a2a1f 50%, #0d1f3c 100%);
   overflow: hidden;
+  justify-content: center;
+  padding: 0;
 }
 
-/* blurred decorative blobs */
 .action-bg-blob {
   position: absolute; border-radius: 50%;
   filter: blur(90px); pointer-events: none; z-index: 0;
@@ -236,138 +237,118 @@ html, body {
 .ab-blob2 { width: 40vw; height: 40vw; bottom: -20%; right: -10%; background: rgba(56,189,248,0.15); }
 .ab-blob3 { width: 30vw; height: 30vw; top: 30%; right: 5%; background: rgba(168,85,247,0.1); }
 
+/* The entire slide content lives inside a fixed-height box */
 .action-inner {
   position: relative; z-index: 2;
-  width: 94%; max-width: 1200px;
-  display: flex; flex-direction: column; gap: clamp(10px, 1.5vh, 18px);
+  width: 94%; max-width: 1240px;
+  height: 96vh;                      /* never taller than the viewport */
+  display: flex; flex-direction: column;
+  gap: 1.4vh;
+  justify-content: center;
 }
 
-/* heading row */
+/* ── heading ── */
 .action-heading {
-  display: flex; align-items: center; gap: 16px;
+  display: flex; align-items: center; gap: 12px;
+  flex-shrink: 0;
 }
 .action-heading-icon {
-  font-size: clamp(40px, 6vw, 72px);
-  filter: drop-shadow(0 0 20px rgba(250,204,21,0.5));
+  font-size: 4.5vh;
+  filter: drop-shadow(0 0 16px rgba(250,204,21,0.5));
   animation: heroFloat 3s ease-in-out infinite;
+  line-height: 1;
 }
-@keyframes heroFloat { 0%,100%{transform:translateY(0) rotate(-4deg)} 50%{transform:translateY(-8px) rotate(4deg)} }
+@keyframes heroFloat { 0%,100%{transform:translateY(0) rotate(-4deg)} 50%{transform:translateY(-6px) rotate(4deg)} }
 
 .action-title {
   font-family: 'Baloo 2', cursive;
-  font-size: clamp(28px, 5vw, 64px);
+  font-size: 4.8vh;
   font-weight: 900; color: #fff; line-height: 1;
-  text-shadow: 0 0 40px rgba(72,239,185,0.35);
+  text-shadow: 0 0 40px rgba(72,239,185,0.3);
 }
 .action-sub {
-  font-size: clamp(13px, 1.6vw, 20px);
-  font-weight: 700; color: rgba(255,255,255,0.6);
-  margin-top: 4px; letter-spacing: 0.3px;
+  font-size: 1.7vh;
+  font-weight: 700; color: rgba(255,255,255,0.58);
+  margin-top: 2px;
 }
 
-/* action grid */
+/* ── 3-column grid, 2 rows ── */
 .action-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  grid-template-rows: auto auto;
-  gap: clamp(10px, 1.2vw, 16px);
+  gap: 1.2vh;
+  flex: 1;                           /* fills remaining space between heading and pledge */
+  min-height: 0;                     /* let flex shrink it */
 }
 
 .act-card {
-  border-radius: 20px;
-  padding: clamp(14px, 2vw, 22px) clamp(14px, 2vw, 20px);
-  display: flex; flex-direction: column; gap: 6px;
-  backdrop-filter: blur(16px);
+  border-radius: 16px;
+  padding: 1.6vh 1.6vw;
+  display: flex; flex-direction: column; gap: 0.5vh;
+  backdrop-filter: blur(14px);
   border: 1.5px solid rgba(255,255,255,0.12);
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
   position: relative; overflow: hidden;
+  min-height: 0;
 }
 .act-card::before {
-  content: ''; position: absolute;
-  inset: 0; border-radius: inherit;
-  background: rgba(255,255,255,0.04);
+  content: ''; position: absolute; inset: 0;
+  border-radius: inherit; background: rgba(255,255,255,0.03);
   pointer-events: none;
 }
-.act-card:hover { transform: translateY(-4px); box-shadow: 0 16px 40px rgba(0,0,0,0.35); }
+.act-card:hover { transform: translateY(-3px); box-shadow: 0 12px 32px rgba(0,0,0,0.35); }
 
-/* colour variants */
 .ac-green  { background: rgba(16,122,64,0.55);  border-color: rgba(52,211,153,0.3);  }
 .ac-blue   { background: rgba(12,74,139,0.55);   border-color: rgba(96,165,250,0.3);  }
 .ac-teal   { background: rgba(8,95,105,0.55);    border-color: rgba(45,212,191,0.3);  }
 .ac-orange { background: rgba(124,45,18,0.55);   border-color: rgba(251,146,60,0.3);  }
 .ac-purple { background: rgba(76,29,149,0.55);   border-color: rgba(192,132,252,0.3); }
 .ac-question {
-  grid-column: span 1;
-  background: rgba(250,204,21,0.12);
-  border: 2px solid rgba(250,204,21,0.45);
-  box-shadow: 0 0 30px rgba(250,204,21,0.1);
+  background: rgba(250,204,21,0.11);
+  border: 2px solid rgba(250,204,21,0.42);
+  box-shadow: 0 0 24px rgba(250,204,21,0.08);
 }
 
-.act-icon {
-  font-size: clamp(28px, 3.5vw, 44px);
-  line-height: 1;
-  filter: drop-shadow(0 2px 8px rgba(0,0,0,0.3));
-}
+.act-icon  { font-size: 3.4vh; line-height: 1; }
 .act-title {
   font-family: 'Baloo 2', cursive;
-  font-size: clamp(14px, 1.8vw, 22px);
-  font-weight: 800; color: #fff; line-height: 1.1;
+  font-size: 2.1vh; font-weight: 800; color: #fff; line-height: 1.1;
 }
-.act-desc {
-  font-size: clamp(11px, 1.1vw, 15px);
-  font-weight: 600; color: rgba(255,255,255,0.72); line-height: 1.45;
-}
-.act-desc-question {
-  font-size: clamp(13px, 1.4vw, 18px);
-  font-weight: 700; color: #fde68a; line-height: 1.4;
-}
+.act-desc  { font-size: 1.55vh; font-weight: 600; color: rgba(255,255,255,0.72); line-height: 1.4; }
+.act-desc-question { font-size: 1.8vh; font-weight: 700; color: #fde68a; line-height: 1.35; }
 
-/* thought bubbles */
-.kids-bubbles {
-  display: flex; flex-wrap: wrap; gap: 6px; margin-top: 6px;
-}
+.kids-bubbles { display: flex; flex-wrap: wrap; gap: 5px; margin-top: 0.5vh; }
 .bubble {
-  background: rgba(250,204,21,0.18);
-  border: 1px solid rgba(250,204,21,0.4);
-  border-radius: 30px;
-  padding: 4px 12px;
-  font-size: clamp(10px, 1vw, 13px);
-  font-weight: 700; color: #fef08a;
+  background: rgba(250,204,21,0.16);
+  border: 1px solid rgba(250,204,21,0.38);
+  border-radius: 30px; padding: 3px 10px;
+  font-size: 1.3vh; font-weight: 700; color: #fef08a;
 }
 
-/* pledge banner */
+/* ── pledge banner (fixed height, flex-shrink 0) ── */
 .pledge-banner {
-  background: linear-gradient(90deg, rgba(5,150,105,0.9), rgba(16,185,129,0.85));
-  border-radius: 18px;
-  padding: clamp(12px, 1.6vh, 18px) clamp(20px, 2.5vw, 36px);
+  flex-shrink: 0;
+  background: linear-gradient(90deg, rgba(5,150,105,0.92), rgba(16,185,129,0.87));
+  border-radius: 14px;
+  padding: 1.4vh 2.2vw;
   display: flex; align-items: center; justify-content: space-between;
-  border: 1.5px solid rgba(52,211,153,0.4);
-  box-shadow: 0 8px 36px rgba(5,150,105,0.35);
+  border: 1.5px solid rgba(52,211,153,0.38);
+  box-shadow: 0 6px 28px rgba(5,150,105,0.3);
 }
-.pledge-left { display: flex; align-items: center; gap: 16px; }
-.pledge-hand {
-  font-size: clamp(30px, 4vw, 52px);
+.pledge-left  { display: flex; align-items: center; gap: 14px; }
+.pledge-hand  {
+  font-size: 3.6vh;
   animation: handWave 1.8s ease-in-out infinite;
-  transform-origin: 70% 80%;
+  transform-origin: 70% 80%; line-height: 1;
 }
 @keyframes handWave { 0%,100%{transform:rotate(-8deg)} 50%{transform:rotate(8deg)} }
-.pledge-words { display: flex; flex-direction: column; gap: 3px; }
-.pledge-title {
-  font-family: 'Baloo 2', cursive;
-  font-size: clamp(15px, 2vw, 24px); font-weight: 900;
-  color: #fff; letter-spacing: 0.5px;
-}
-.pledge-oath {
-  font-size: clamp(11px, 1.2vw, 16px); font-weight: 700;
-  color: rgba(255,255,255,0.88); font-style: italic; line-height: 1.4;
-}
-.pledge-right {
-  font-size: clamp(22px, 3vw, 38px); letter-spacing: 4px;
-  filter: drop-shadow(0 2px 8px rgba(0,0,0,0.2));
-}
+.pledge-words { display: flex; flex-direction: column; gap: 2px; }
+.pledge-title { font-family:'Baloo 2',cursive; font-size:2.1vh; font-weight:900; color:#fff; }
+.pledge-oath  { font-size:1.55vh; font-weight:700; color:rgba(255,255,255,0.88); font-style:italic; line-height:1.4; }
+.pledge-right { font-size: 2.8vh; letter-spacing: 4px; }
 
 /* ───── ANIMATIONS ───── */
-@keyframes fadeUp { from { opacity:0; transform:translateY(16px); } to { opacity:1; transform:translateY(0); } }
+@keyframes fadeUp { from{opacity:0;transform:translateY(14px)} to{opacity:1;transform:translateY(0)} }
 
 .active .title-content > * { animation: fadeUp 0.7s ease both; }
 .active .title-content > *:nth-child(1) { animation-delay: 0.08s; }
@@ -375,15 +356,15 @@ html, body {
 .active .title-content > *:nth-child(3) { animation-delay: 0.36s; }
 .active .title-content > *:nth-child(4) { animation-delay: 0.48s; }
 
-.active .action-heading  { animation: fadeUp 0.6s 0.05s ease both; }
-.active .act-card        { animation: fadeUp 0.55s ease both; }
-.active .act-card:nth-child(1) { animation-delay: 0.12s; }
-.active .act-card:nth-child(2) { animation-delay: 0.20s; }
-.active .act-card:nth-child(3) { animation-delay: 0.28s; }
-.active .act-card:nth-child(4) { animation-delay: 0.36s; }
-.active .act-card:nth-child(5) { animation-delay: 0.44s; }
-.active .act-card:nth-child(6) { animation-delay: 0.52s; }
-.active .pledge-banner   { animation: fadeUp 0.6s 0.6s ease both; }
+.active .action-heading          { animation: fadeUp 0.55s 0.05s ease both; }
+.active .act-card                { animation: fadeUp 0.5s ease both; }
+.active .act-card:nth-child(1)   { animation-delay: 0.10s; }
+.active .act-card:nth-child(2)   { animation-delay: 0.17s; }
+.active .act-card:nth-child(3)   { animation-delay: 0.24s; }
+.active .act-card:nth-child(4)   { animation-delay: 0.31s; }
+.active .act-card:nth-child(5)   { animation-delay: 0.38s; }
+.active .act-card:nth-child(6)   { animation-delay: 0.45s; }
+.active .pledge-banner           { animation: fadeUp 0.55s 0.52s ease both; }
 
 @media (max-width: 900px) {
   .action-grid { grid-template-columns: repeat(2, 1fr); }
