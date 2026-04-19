@@ -253,7 +253,7 @@ html, body {
   flex-shrink: 0;
 }
 .action-heading-icon {
-  font-size: 4.5vh;
+  font-size: 6vh;
   filter: drop-shadow(0 0 16px rgba(250,204,21,0.5));
   animation: heroFloat 3s ease-in-out infinite;
   line-height: 1;
@@ -262,12 +262,12 @@ html, body {
 
 .action-title {
   font-family: 'Baloo 2', cursive;
-  font-size: 4.8vh;
+  font-size: 5.8vh;
   font-weight: 900; color: #fff; line-height: 1;
   text-shadow: 0 0 40px rgba(72,239,185,0.3);
 }
 .action-sub {
-  font-size: 1.7vh;
+  font-size: 2.2vh;
   font-weight: 700; color: rgba(255,255,255,0.58);
   margin-top: 2px;
 }
@@ -283,8 +283,8 @@ html, body {
 
 .act-card {
   border-radius: 16px;
-  padding: 1.6vh 1.6vw;
-  display: flex; flex-direction: column; gap: 0.5vh;
+  padding: 2.2vh 1.8vw;
+  display: flex; flex-direction: column; gap: 1vh;
   backdrop-filter: blur(14px);
   border: 1.5px solid rgba(255,255,255,0.12);
   transition: transform 0.25s ease, box-shadow 0.25s ease;
@@ -309,20 +309,21 @@ html, body {
   box-shadow: 0 0 24px rgba(250,204,21,0.08);
 }
 
-.act-icon  { font-size: 3.4vh; line-height: 1; }
+.act-icon  { font-size: 5.5vh; line-height: 1; }
 .act-title {
   font-family: 'Baloo 2', cursive;
-  font-size: 2.1vh; font-weight: 800; color: #fff; line-height: 1.1;
+  font-size: 3vh; font-weight: 800; color: #fff; line-height: 1.15;
+  margin-top: 0.3vh;
 }
-.act-desc  { font-size: 1.55vh; font-weight: 600; color: rgba(255,255,255,0.72); line-height: 1.4; }
-.act-desc-question { font-size: 1.8vh; font-weight: 700; color: #fde68a; line-height: 1.35; }
+.act-desc  { font-size: 2.1vh; font-weight: 600; color: rgba(255,255,255,0.82); line-height: 1.5; }
+.act-desc-question { font-size: 2.5vh; font-weight: 700; color: #fde68a; line-height: 1.4; }
 
-.kids-bubbles { display: flex; flex-wrap: wrap; gap: 5px; margin-top: 0.5vh; }
+.kids-bubbles { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 1vh; }
 .bubble {
   background: rgba(250,204,21,0.16);
   border: 1px solid rgba(250,204,21,0.38);
-  border-radius: 30px; padding: 3px 10px;
-  font-size: 1.3vh; font-weight: 700; color: #fef08a;
+  border-radius: 30px; padding: 0.5vh 1.2vw;
+  font-size: 1.9vh; font-weight: 700; color: #fef08a;
 }
 
 /* ── pledge banner (fixed height, flex-shrink 0) ── */
@@ -330,22 +331,22 @@ html, body {
   flex-shrink: 0;
   background: linear-gradient(90deg, rgba(5,150,105,0.92), rgba(16,185,129,0.87));
   border-radius: 14px;
-  padding: 1.4vh 2.2vw;
+  padding: 1.8vh 2.2vw;
   display: flex; align-items: center; justify-content: space-between;
   border: 1.5px solid rgba(52,211,153,0.38);
   box-shadow: 0 6px 28px rgba(5,150,105,0.3);
 }
 .pledge-left  { display: flex; align-items: center; gap: 14px; }
 .pledge-hand  {
-  font-size: 3.6vh;
+  font-size: 4.8vh;
   animation: handWave 1.8s ease-in-out infinite;
   transform-origin: 70% 80%; line-height: 1;
 }
 @keyframes handWave { 0%,100%{transform:rotate(-8deg)} 50%{transform:rotate(8deg)} }
-.pledge-words { display: flex; flex-direction: column; gap: 2px; }
-.pledge-title { font-family:'Baloo 2',cursive; font-size:2.1vh; font-weight:900; color:#fff; }
-.pledge-oath  { font-size:1.55vh; font-weight:700; color:rgba(255,255,255,0.88); font-style:italic; line-height:1.4; }
-.pledge-right { font-size: 2.8vh; letter-spacing: 4px; }
+.pledge-words { display: flex; flex-direction: column; gap: 3px; }
+.pledge-title { font-family:'Baloo 2',cursive; font-size:2.8vh; font-weight:900; color:#fff; }
+.pledge-oath  { font-size:2vh; font-weight:700; color:rgba(255,255,255,0.88); font-style:italic; line-height:1.45; }
+.pledge-right { font-size: 3.6vh; letter-spacing: 4px; }
 
 /* ───── ANIMATIONS ───── */
 @keyframes fadeUp { from{opacity:0;transform:translateY(14px)} to{opacity:1;transform:translateY(0)} }
